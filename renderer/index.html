@@ -5,6 +5,7 @@
   <meta charset="UTF-8" />
   <title>Codium</title>
   <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="../node_modules/xterm/css/xterm.css" />
 </head>
 
 <body>
@@ -18,7 +19,9 @@
 
       <div class="resizer horizontal"></div>
 
-      <div class="terminal">TERMINAL</div>
+      <div class="terminal">
+        <div id="terminal-container"></div>
+      </div>
     </div>
 
     <div class="resizer vertical"></div>
@@ -26,6 +29,9 @@
     <div class="sidebar right">OUTLINE</div>
   </div>
 
+  <script src="../node_modules/xterm/lib/xterm.js"></script>
+  <script src="../node_modules/xterm-addon-fit/lib/xterm-addon-fit.js"></script>
+  <script src="terminal.js"></script>
   <script src="script.js"></script>
 </body>
 
