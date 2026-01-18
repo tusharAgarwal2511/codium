@@ -22,10 +22,17 @@ body {
 /* Sidebars */
 .sidebar {
   width: 220px;
+  min-width: 180px;
   background: #020617;
   border-right: 1px solid #1e293b;
   padding: 12px;
   font-size: 13px;
+  flex-shrink: 0;
+}
+
+.sidebar.right {
+  border-right: none;
+  border-left: 1px solid #1e293b;
 }
 
 /* Center area */
@@ -34,11 +41,13 @@ body {
   display: flex;
   flex-direction: column;
   background: #020617;
+  min-width: 0;
 }
 
 /* Editor */
 .editor {
   flex: 1;
+  min-height: 150px;
   background: #020617;
   padding: 12px;
   font-size: 14px;
@@ -47,41 +56,88 @@ body {
 /* Terminal */
 .terminal {
   height: 220px;
+  min-height: 120px;
   background: #020617;
   border-top: 1px solid #1e293b;
   padding: 12px;
   font-size: 13px;
+  flex-shrink: 0;
 }
 
 /* ===== Resizers ===== */
 
 .resizer {
-  background: #1e293b;
-  transition: background 0.15s ease;
+  background: transparent;
+  position: relative;
+  user-select: none;
+  flex-shrink: 0;
 }
 
 .resizer.vertical {
-  width: 8px;              /* WIDER = easier grab */
+  width: 4px;
   cursor: col-resize;
 }
 
 .resizer.horizontal {
-  height: 8px;             /* WIDER */
+  height: 4px;
   cursor: row-resize;
 }
 
-.resizer:hover {
-  background: #3b82f6;     /* VS Code blue */
+/* Resizer icons */
+.resizer::before {
+  content: '';
+  position: absolute;
+  background: #475569;
+  opacity: 0;
+  transition: opacity 0.2s ease;
 }
 
-.sidebar {
-  min-width: 180px;
+.resizer.vertical::before {
+  width: 2px;
+  height: 40px;
+  left: 1px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-radius: 1px;
 }
 
-.editor {
-  min-height: 150px;
+.resizer.horizontal::before {
+  width: 40px;
+  height: 2px;
+  top: 1px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 1px;
 }
 
-.terminal {
-  min-height: 120px;
+.resizer:hover::before {
+  opacity: 1;
+}
+
+/* Active state during dragging */
+.resizer.active {
+  background: transparent;
+}
+
+.resizer.active::before {
+  opacity: 1;
+  background: #3b82f6;
+}
+
+/* Prevent text selection during resize */
+body.resizing {
+  user-select: none;
+  cursor: col-resize;
+}
+
+body.resizing-horizontal {
+  cursor: row-resize;
+}
+
+body.resizing * {
+  pointer-events: none;
+}
+
+body.resizing .resizer {
+  pointer-events: auto;
 }
