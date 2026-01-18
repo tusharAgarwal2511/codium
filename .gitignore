@@ -1,0 +1,35 @@
+# Node modules
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-error.log*
+
+# Environment variables
+.env
+
+# Electron build output
+dist/
+out/
+release/
+*.asar
+
+# OS files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# IDE/editor configs
+.vscode/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.swp
+
+# Others
+*.sublime-workspace
+*.sublime-project

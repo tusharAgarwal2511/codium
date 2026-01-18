@@ -1,0 +1,87 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0f172a;
+  color: #e5e7eb;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* Root layout */
+#app {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* Sidebars */
+.sidebar {
+  width: 220px;
+  background: #020617;
+  border-right: 1px solid #1e293b;
+  padding: 12px;
+  font-size: 13px;
+}
+
+/* Center area */
+.center {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: #020617;
+}
+
+/* Editor */
+.editor {
+  flex: 1;
+  background: #020617;
+  padding: 12px;
+  font-size: 14px;
+}
+
+/* Terminal */
+.terminal {
+  height: 220px;
+  background: #020617;
+  border-top: 1px solid #1e293b;
+  padding: 12px;
+  font-size: 13px;
+}
+
+/* ===== Resizers ===== */
+
+.resizer {
+  background: #1e293b;
+  transition: background 0.15s ease;
+}
+
+.resizer.vertical {
+  width: 8px;              /* WIDER = easier grab */
+  cursor: col-resize;
+}
+
+.resizer.horizontal {
+  height: 8px;             /* WIDER */
+  cursor: row-resize;
+}
+
+.resizer:hover {
+  background: #3b82f6;     /* VS Code blue */
+}
+
+.sidebar {
+  min-width: 180px;
+}
+
+.editor {
+  min-height: 150px;
+}
+
+.terminal {
+  min-height: 120px;
+}
