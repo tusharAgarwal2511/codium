@@ -5,18 +5,20 @@
 }
 
 body {
-  background: #0a0a0a;
+  background: #202020;
   color: #e5e7eb;
   font-family: system-ui, -apple-system, BlinkMacSystemFont;
   height: 100vh;
+  padding: 12px;
+  box-sizing: border-box;
   overflow: hidden;
 }
 
 /* Root layout */
 #app {
   display: flex;
-  height: 100vh;
-  width: 100vw;
+  height: 100%;
+  width: 100%;
 }
 
 /* Sidebars */
@@ -24,15 +26,18 @@ body {
   width: 220px;
   min-width: 180px;
   background: #111111;
-  border-right: 1px solid #222222;
+  /* border-right: 1px solid #3a3a3a; */
   padding: 12px;
+  border-radius: 8px;
+  border: none;
   font-size: 13px;
   flex-shrink: 0;
 }
 
 .sidebar.right {
-  border-right: none;
-  border-left: 1px solid #222222;
+  /* border-right: none; */
+  /* border-left: 1px solid #3a3a3a; */
+  border: none;
 }
 
 /* Center area */
@@ -41,6 +46,8 @@ body {
   display: flex;
   flex-direction: column;
   background: #111111;
+  border-radius: 8px;
+  border: none;
   min-width: 0;
 }
 
@@ -49,7 +56,9 @@ body {
   flex: 1;
   min-height: 150px;
   background: #111111;
+  border-radius: 8px;
   padding: 12px;
+  border: none;
   font-size: 14px;
 }
 
@@ -58,8 +67,10 @@ body {
   height: 220px;
   min-height: 120px;
   background: #111111;
-  border-top: 1px solid #222222;
-  padding: 0 0 16px 0;
+  /* border-top: 1px solid #3a3a3a; */
+  border: none;
+  border-radius: 8px;
+  padding: 0 0 0 0;
   font-size: 13px;
   flex-shrink: 0;
   overflow: hidden;
@@ -67,7 +78,7 @@ body {
 
 #terminal-container {
   width: 100%;
-  height: calc(100% - 16px);
+  height: calc(100% - 0px);
   padding: 8px;
   overflow: hidden;
 }
@@ -76,7 +87,7 @@ body {
 .xterm-viewport {
   overflow-y: auto !important;
   scrollbar-width: thin;
-  scrollbar-color: #333333 #111111;
+  scrollbar-color: #4a4a4a #1a1a1a;
 }
 
 .xterm-viewport::-webkit-scrollbar {
@@ -84,21 +95,22 @@ body {
 }
 
 .xterm-viewport::-webkit-scrollbar-track {
-  background: #111111;
+  background: #1a1a1a;
 }
 
 .xterm-viewport::-webkit-scrollbar-thumb {
-  background: #333333;
+  background: #4a4a4a;
   border-radius: 5px;
 }
 
 .xterm-viewport::-webkit-scrollbar-thumb:hover {
-  background: #444444;
+  background: #5a5a5a;
 }
 
 /* Fix terminal scrolling behavior */
 .xterm {
   height: 100% !important;
+  padding: 10px;
 }
 
 .xterm-screen {
@@ -108,19 +120,19 @@ body {
 /* ===== Resizers ===== */
 
 .resizer {
-  background: transparent;
+  background: #202020;
   position: relative;
   user-select: none;
   flex-shrink: 0;
 }
 
 .resizer.vertical {
-  width: 4px;
+  width: 6px;
   cursor: col-resize;
 }
 
 .resizer.horizontal {
-  height: 4px;
+  height: 6px;
   cursor: row-resize;
 }
 
@@ -128,27 +140,28 @@ body {
 .resizer::before {
   content: '';
   position: absolute;
-  background: #333333;
+  background: #ff0000;
   opacity: 0;
   transition: opacity 0.2s ease;
 }
 
 .resizer.vertical::before {
-  width: 2px;
-  height: 40px;
-  left: 1px;
+  width: 3px;
+  height: 50px;
+  background: #ff0000;
+  left: 50%;
   top: 50%;
-  transform: translateY(-50%);
-  border-radius: 1px;
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
 }
 
 .resizer.horizontal::before {
-  width: 40px;
-  height: 2px;
-  top: 1px;
+  width: 50px;
+  height: 3px;
+  top: 50%;
   left: 50%;
-  transform: translateX(-50%);
-  border-radius: 1px;
+  transform: translate(-50%, -50%);
+  border-radius: 2px;
 }
 
 .resizer:hover::before {
@@ -157,12 +170,12 @@ body {
 
 /* Active state during dragging */
 .resizer.active {
-  background: transparent;
+  background: #202020;
 }
 
 .resizer.active::before {
   opacity: 1;
-  background: #555555;
+  background: #202020;
 }
 
 /* Prevent text selection during resize */

@@ -7,8 +7,8 @@ let ptyProcess = null;
 
 function createWindow() {
   const win = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 1400,
+    height: 900,
     backgroundColor: "#000000",
     webPreferences: {
       nodeIntegration: false,
@@ -16,6 +16,9 @@ function createWindow() {
       preload: path.join(__dirname, "preload.js")
     }
   });
+
+  // Maximize window on startup
+  win.maximize();
 
   Menu.setApplicationMenu(null);
 
