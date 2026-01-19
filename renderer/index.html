@@ -10,15 +10,38 @@
 
 <body>
   <div id="app">
-    <div class="sidebar left">EXPLORER</div>
+    <!-- Left Sidebar - File Explorer -->
+    <div class="sidebar left">
+      <div class="explorer-header">
+        <span id="folder-name">NO FOLDER</span>
+        <div class="explorer-actions">
+          <button id="open-folder-btn" class="icon-btn" title="Open Folder">📂</button>
+          <button id="new-file-btn" class="icon-btn" title="New File">➕</button>
+          <button id="refresh-btn" class="icon-btn" title="Refresh">🔄</button>
+        </div>
+      </div>
+      <div id="file-tree" class="empty-state">
+        <div class="empty-message">
+          <div class="empty-icon">📁</div>
+          <p>You have not yet opened a folder</p>
+          <button id="open-folder-empty" class="open-btn">Open Folder</button>
+        </div>
+      </div>
+    </div>
 
     <div class="resizer vertical"></div>
 
+    <!-- Center - Editor + Terminal -->
     <div class="center">
-      <div class="editor">EDITOR</div>
+      <!-- Editor Area -->
+      <div class="editor">
+        <div id="tabs-container" class="tabs-container"></div>
+        <div id="monaco-editor" class="monaco-container"></div>
+      </div>
 
       <div class="resizer horizontal"></div>
 
+      <!-- Terminal Area -->
       <div class="terminal">
         <div id="terminal-container"></div>
       </div>
@@ -26,13 +49,35 @@
 
     <div class="resizer vertical"></div>
 
-    <div class="sidebar right">AI HELPER</div>
+    <!-- Right Sidebar -->
+    <div class="sidebar right">
+      <div style="padding: 12px; color: #888;">AI HELPER</div>
+    </div>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js" defer></script>
-  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js" defer></script>
-  <script src="script.js" defer></script>
-  <script src="terminal.js" defer></script>
+  <!-- Context Menu -->
+  <div id="context-menu" class="context-menu">
+    <div class="context-item" data-action="new-file">New File</div>
+    <div class="context-item" data-action="rename">Rename</div>
+    <div class="context-item" data-action="delete">Delete</div>
+  </div>
+
+  <!-- Load Libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/xterm@5.3.0/lib/xterm.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.8.0/lib/xterm-addon-fit.js"></script>
+  
+  <!-- Monaco Editor -->
+  <script>
+    var require = { paths: { vs: 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } };
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/editor/editor.main.nls.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/editor/editor.main.js"></script>
+
+  <!-- App Scripts -->
+  <script src="script.js"></script>
+  <script src="app.js"></script>
+  <script src="terminal.js"></script>
 </body>
 
 </html>

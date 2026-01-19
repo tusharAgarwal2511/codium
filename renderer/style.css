@@ -7,61 +7,276 @@
 body {
   background: #000000;
   color: #e5e7eb;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   height: 100vh;
   padding: 32px 6px 12px 6px;
-  box-sizing: border-box;
   overflow: hidden;
 }
 
-/* Root layout */
 #app {
   display: flex;
   height: 100%;
   width: 100%;
 }
 
-/* Sidebars */
+/* ===== SIDEBAR ===== */
 .sidebar {
-  width: 220px;
+  width: 250px;
   min-width: 180px;
   background: #0B192C;
-  /* border-right: 1px solid #3a3a3a; */
-  padding: 12px;
   border-radius: 4px;
-  border: none;
-  font-size: 13px;
   flex-shrink: 0;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
 .sidebar.right {
-  /* border-right: none; */
-  /* border-left: 1px solid #3a3a3a; */
-  border: none;
+  padding: 12px;
 }
 
-/* Center area */
+/* Explorer Header */
+.explorer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  background: #0a0f1a;
+  border-bottom: 1px solid #1a1a1a;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+}
+
+#folder-name {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.explorer-actions {
+  display: flex;
+  gap: 4px;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: #888;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 3px;
+  font-size: 14px;
+  transition: all 0.15s;
+  line-height: 1;
+}
+
+.icon-btn:hover {
+  background: #1a2332;
+  color: #e5e7eb;
+}
+
+/* File Tree */
+#file-tree {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+#file-tree::-webkit-scrollbar {
+  width: 8px;
+}
+
+#file-tree::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+#file-tree::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+  border-radius: 4px;
+}
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+}
+
+.empty-message {
+  text-align: center;
+  color: #888;
+  padding: 20px;
+}
+
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+}
+
+.empty-message p {
+  font-size: 13px;
+  margin-bottom: 16px;
+}
+
+.open-btn {
+  background: #4a90e2;
+  border: none;
+  color: white;
+  padding: 8px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: background 0.15s;
+}
+
+.open-btn:hover {
+  background: #357abd;
+}
+
+/* Tree Items */
+.tree-item {
+  display: flex;
+  align-items: center;
+  padding: 4px 8px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 13px;
+  transition: background 0.1s;
+}
+
+.tree-item:hover {
+  background: #1a2332;
+}
+
+.tree-item.selected {
+  background: #2a3f5f;
+}
+
+.tree-arrow {
+  width: 16px;
+  font-size: 10px;
+  color: #888;
+  text-align: center;
+  margin-right: 2px;
+}
+
+.tree-icon {
+  margin-right: 6px;
+  font-size: 14px;
+}
+
+.tree-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== CENTER AREA ===== */
 .center {
   flex: 1;
   display: flex;
   flex-direction: column;
-  background: #0B192C;
-  border-radius: 4px;
-  border: none;
   min-width: 0;
-  background: transparent;   /* IMPORTANT */
-  gap: 1px;   
+  gap: 1px;
 }
 
 /* Editor */
 .editor {
   flex: 1;
-  min-height: 150px;
+  min-height: 200px;
   background: #0B192C;
   border-radius: 4px;
-  padding: 12px;
-  border: none;
-  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Tabs */
+.tabs-container {
+  display: flex;
+  background: #0a0f1a;
+  border-bottom: 1px solid #1a1a1a;
+  overflow-x: auto;
+  min-height: 35px;
+}
+
+.tabs-container::-webkit-scrollbar {
+  height: 3px;
+}
+
+.tabs-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tabs-container::-webkit-scrollbar-thumb {
+  background: #4a4a4a;
+}
+
+.tab {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background: #0a0f1a;
+  border-right: 1px solid #1a1a1a;
+  cursor: pointer;
+  user-select: none;
+  min-width: 100px;
+  max-width: 180px;
+  font-size: 13px;
+  transition: background 0.1s;
+}
+
+.tab:hover {
+  background: #1a2332;
+}
+
+.tab.active {
+  background: #0B192C;
+  border-bottom: 2px solid #4a90e2;
+}
+
+.tab-icon {
+  margin-right: 6px;
+  font-size: 13px;
+}
+
+.tab-label {
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tab-modified {
+  color: #4a90e2;
+  margin-left: 4px;
+  font-weight: bold;
+}
+
+.tab-close {
+  margin-left: 8px;
+  padding: 2px 4px;
+  border-radius: 3px;
+  opacity: 0.6;
+  font-size: 16px;
+  line-height: 1;
+  transition: all 0.15s;
+}
+
+.tab-close:hover {
+  background: #ff4444;
+  opacity: 1;
+}
+
+/* Monaco Editor */
+.monaco-container {
+  flex: 1;
+  overflow: hidden;
 }
 
 /* Terminal */
@@ -69,27 +284,20 @@ body {
   height: 220px;
   min-height: 120px;
   background: #0B192C;
-  /* border-top: 1px solid #3a3a3a; */
-  border: none;
   border-radius: 4px;
-  padding: 0 0 0 0;
-  font-size: 13px;
-  flex-shrink: 0;
   overflow: hidden;
+  flex-shrink: 0;
 }
 
 #terminal-container {
   width: 100%;
-  height: calc(100% - 0px);
+  height: 100%;
   padding: 8px;
-  overflow: hidden;
 }
 
-/* Custom scrollbar for terminal */
-.xterm-viewport {
-  overflow-y: auto !important;
-  scrollbar-width: thin;
-  scrollbar-color: #4a4a4a #1a1a1a;
+.xterm {
+  height: 100% !important;
+  padding: 10px;
 }
 
 .xterm-viewport::-webkit-scrollbar {
@@ -97,7 +305,7 @@ body {
 }
 
 .xterm-viewport::-webkit-scrollbar-track {
-  background: #1a1a1a;
+  background: #0B192C;
 }
 
 .xterm-viewport::-webkit-scrollbar-thumb {
@@ -105,22 +313,32 @@ body {
   border-radius: 5px;
 }
 
-.xterm-viewport::-webkit-scrollbar-thumb:hover {
-  background: #5a5a5a;
+/* Context Menu */
+.context-menu {
+  display: none;
+  position: fixed;
+  background: #1a1a1a;
+  border: 1px solid #3a3a3a;
+  border-radius: 4px;
+  padding: 4px;
+  z-index: 10000;
+  min-width: 150px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
 }
 
-/* Fix terminal scrolling behavior */
-.xterm {
-  height: 100% !important;
-  padding: 10px;
+.context-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 3px;
+  font-size: 13px;
+  transition: background 0.1s;
 }
 
-.xterm-screen {
-  height: 100% !important;
+.context-item:hover {
+  background: #2a2a2a;
 }
 
-/* ===== Resizers ===== */
-
+/* ===== RESIZERS ===== */
 .resizer {
   background: #000000;
   position: relative;
@@ -138,19 +356,17 @@ body {
   cursor: row-resize;
 }
 
-/* Resizer icons */
 .resizer::before {
   content: '';
   position: absolute;
   background: #ff0000;
   opacity: 0;
-  transition: opacity 0.2s ease;
+  transition: opacity 0.2s;
 }
 
 .resizer.vertical::before {
   width: 3px;
   height: 50px;
-  background: #ff0000;
   left: 50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -170,17 +386,11 @@ body {
   opacity: 1;
 }
 
-/* Active state during dragging */
-.resizer.active {
-  background: #000000;
-}
-
 .resizer.active::before {
   opacity: 1;
-  background: #000000;
+  background: #ff0000;
 }
 
-/* Prevent text selection during resize */
 body.resizing {
   user-select: none;
   cursor: col-resize;
