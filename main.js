@@ -9,6 +9,12 @@ function createWindow() {
   const win = new BrowserWindow({
     width: 1400,
     height: 900,
+    titleBarStyle: 'hidden',
+    titleBarOverlay: {
+      color: '#000000',
+      symbolColor: '#ffffff',
+      height: 32   // IMPORTANT
+    },
     backgroundColor: "#000000",
     webPreferences: {
       nodeIntegration: false,

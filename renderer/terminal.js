@@ -29,10 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
       fontFamily: 'Fira Code, Menlo, Monaco, "Courier New", monospace',
       scrollback: 1000,
       theme: {
-        background: '#111111',
+        background: '#0B192C',
         foreground: '#e5e7eb',
         cursor: '#888888',
-        cursorAccent: '#111111',
+        cursorAccent: '#0B192C',
         selectionBackground: '#3a3a3a66',
         selectionForeground: '#e5e7eb',
         black: '#0a0a0a',
