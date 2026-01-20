@@ -4,7 +4,10 @@ const state = {
   expandedFolders: new Set(),
   openTabs: new Map(),
   activeTab: null,
-  editor: null
+  editor: null,
+  fontSize: 14,
+  fontFamily: 'Fira Code',
+  theme: 'vs-dark'
 };
 
 // ========== INITIALIZE APP ==========
@@ -13,6 +16,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   
   await initMonaco();
   initEventListeners();
+  initEditorSettings();
   
   console.log('✅ Codium ready!');
 });
@@ -36,12 +40,12 @@ async function initMonaco() {
 
   // Create editor
   state.editor = monaco.editor.create(document.getElementById('monaco-editor'), {
-    value: '// Welcome to Codium!\n// Open a folder (📂) and click on any file to start editing\n// All programming languages are supported',
+    value: '// Welcome to Codium!\n// Open a folder (📂) and click on any file to start editing\n// All programming languages are supported\n// Use the controls at the top to change theme, font, and font size',
     language: 'javascript',
-    theme: 'vs-dark',
+    theme: state.theme,
     automaticLayout: true,
-    fontSize: 14,
-    fontFamily: 'Consolas, "Courier New", monospace',
+    fontSize: state.fontSize,
+    fontFamily: `${state.fontFamily}, Consolas, "Courier New", monospace`,
     minimap: { enabled: true },
     scrollBeyondLastLine: false,
     wordWrap: 'off',
@@ -50,11 +54,16 @@ async function initMonaco() {
     bracketPairColorization: { enabled: true }
   });
 
-  // Custom theme
+  // Define custom themes
   monaco.editor.defineTheme('codium-dark', {
     base: 'vs-dark',
     inherit: true,
-    rules: [],
+    rules: [
+      { token: 'comment', foreground: '6A9955' },
+      { token: 'keyword', foreground: 'C586C0' },
+      { token: 'string', foreground: 'CE9178' },
+      { token: 'number', foreground: 'B5CEA8' }
+    ],
     colors: {
       'editor.background': '#0B192C',
       'editor.foreground': '#e5e7eb',
@@ -63,12 +72,62 @@ async function initMonaco() {
       'editor.selectionBackground': '#3a3a3a66'
     }
   });
-  monaco.editor.setTheme('codium-dark');
 
   // Keyboard shortcuts
   state.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KeyS, saveCurrentFile);
 
   console.log('✅ Monaco ready!');
+}
+
+// ========== EDITOR SETTINGS ==========
+function initEditorSettings() {
+  // Theme selector
+  const themeSelect = document.getElementById('theme-select');
+  themeSelect.value = state.theme;
+  themeSelect.addEventListener('change', (e) => {
+    state.theme = e.target.value;
+    monaco.editor.setTheme(state.theme);
+    console.log('Theme changed to:', state.theme);
+  });
+
+  // Font selector
+  const fontSelect = document.getElementById('font-select');
+  fontSelect.value = state.fontFamily;
+  fontSelect.addEventListener('change', (e) => {
+    state.fontFamily = e.target.value;
+    updateEditorFont();
+    console.log('Font changed to:', state.fontFamily);
+  });
+
+  // Font size controls
+  document.getElementById('font-increase').addEventListener('click', () => {
+    if (state.fontSize < 30) {
+      state.fontSize += 2;
+      updateEditorFont();
+    }
+  });
+
+  document.getElementById('font-decrease').addEventListener('click', () => {
+    if (state.fontSize > 8) {
+      state.fontSize -= 2;
+      updateEditorFont();
+    }
+  });
+
+  updateFontSizeDisplay();
+}
+
+function updateEditorFont() {
+  state.editor.updateOptions({
+    fontSize: state.fontSize,
+    fontFamily: `${state.fontFamily}, Consolas, "Courier New", monospace`
+  });
+  updateFontSizeDisplay();
+  console.log(`Font updated: ${state.fontFamily} ${state.fontSize}px`);
+}
+
+function updateFontSizeDisplay() {
+  document.getElementById('font-size-display').textContent = state.fontSize;
 }
 
 // ========== EVENT LISTENERS ==========
@@ -132,7 +191,10 @@ async function loadFileTree(path) {
 
 function renderTree(items, container, basePath, level) {
   items.forEach(item => {
-    const fullPath = basePath + '/' + item.name;
+    const separator = basePath.includes('\\') ? '\\' : '/';
+    const fullPath = basePath.endsWith(separator) 
+      ? basePath + item.name 
+      : basePath + separator + item.name;
     
     // Create tree item
     const div = document.createElement('div');
@@ -337,7 +399,7 @@ async function closeTab(path) {
     } else {
       state.activeTab = null;
       const welcome = monaco.editor.createModel(
-        '// Welcome to Codium!\n// Open a folder (📂) and click on any file to start editing\n// All programming languages are supported',
+        '// Welcome to Codium!\n// Open a folder (📂) and click on any file to start editing\n// All programming languages are supported\n// Use the controls at the top to change theme, font, and font size',
         'javascript'
       );
       state.editor.setModel(welcome);
@@ -411,13 +473,18 @@ async function createNewFile() {
   const name = prompt('Enter file name:');
   if (!name) return;
 
-  const path = state.currentFolder + '/' + name;
+  const separator = state.currentFolder.includes('\\') ? '\\' : '/';
+  const path = state.currentFolder.endsWith(separator)
+    ? state.currentFolder + name
+    : state.currentFolder + separator + name;
   
   try {
     await window.fileSystem.writeFile(path, '');
     await loadFileTree(state.currentFolder);
     await openFile(path);
+    console.log('✅ File created:', path);
   } catch (error) {
+    console.error('❌ Error creating file:', error);
     alert('Error creating file: ' + error.message);
   }
 }
@@ -439,7 +506,8 @@ function showContextMenu(e, path, isDir) {
     } else if (action === 'rename') {
       const newName = prompt('New name:', path.split(/[\\/]/).pop());
       if (newName) {
-        const newPath = path.replace(/[^\/\\]+$/, newName);
+        const separator = path.includes('\\') ? '\\' : '/';
+        const newPath = path.substring(0, path.lastIndexOf(separator)) + separator + newName;
         await window.fileSystem.renameItem(path, newPath);
         await loadFileTree(state.currentFolder);
       }

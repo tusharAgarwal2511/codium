@@ -35,7 +35,29 @@
     <div class="center">
       <!-- Editor Area -->
       <div class="editor">
-        <div id="tabs-container" class="tabs-container"></div>
+        <!-- Editor Controls Bar -->
+        <div class="editor-controls">
+          <div id="tabs-container" class="tabs-container"></div>
+          <div class="editor-settings">
+            <select id="theme-select" class="settings-dropdown" title="Theme">
+              <option value="vs-dark">Dark</option>
+              <option value="vs-light">Light</option>
+              <option value="hc-black">High Contrast</option>
+              <option value="codium-dark">Codium Dark</option>
+            </select>
+            <select id="font-select" class="settings-dropdown" title="Font">
+              <option value="Fira Code">Fira Code</option>
+              <option value="Consolas">Consolas</option>
+              <option value="Monaco">Monaco</option>
+              <option value="Courier New">Courier New</option>
+              <option value="JetBrains Mono">JetBrains Mono</option>
+              <option value="Source Code Pro">Source Code Pro</option>
+            </select>
+            <button id="font-decrease" class="icon-btn-small" title="Decrease Font Size">A-</button>
+            <span id="font-size-display" class="font-size-label">14</span>
+            <button id="font-increase" class="icon-btn-small" title="Increase Font Size">A+</button>
+          </div>
+        </div>
         <div id="monaco-editor" class="monaco-container"></div>
       </div>
 
