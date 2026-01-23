@@ -25,7 +25,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Initialize xterm.js terminal
     const term = new Terminal({
       cursorBlink: true,
-      fontSize: 11,
+      fontSize: 12,
       fontFamily: 'Fira Code, Menlo, Monaco, "Courier New", monospace',
       scrollback: 1000,
       theme: {
