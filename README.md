@@ -33,11 +33,10 @@ Codium is a lightweight desktop editor for browsing local folders, editing sourc
 
 | Screenshot | Preview |
 |---|---|
-| Main workspace layout | ![Main workspace layout](images/Screenshot1.png) |
-| Explorer and editor view | ![Explorer and editor view](images/Screenshot2.png) |
-| Terminal integration | ![Terminal integration](images/Screenshot3.png) |
-
-> If you add more screenshots to the repository, place them in the images folder and update this table accordingly.
+| Home screen | ![Home screen](screenshots/home_screen.png) |
+| Explain code | ![Explain code](screenshots/explain_code.png) |
+| Find problems | ![Find problems](screenshots/find_problems.png) |
+| Generate tests | ![Generate tests](screenshots/generate_tests.png) |
 
 ---
 
